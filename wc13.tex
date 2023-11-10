@@ -13,6 +13,11 @@
 \qformat{{\large\bf \thequestion. \thequestiontitle}\hfill}
 \boxedpoints
 
+\usepackage{draftwatermark}
+\SetWatermarkText{Sample Solution}
+\SetWatermarkScale{3}
+\printanswers
+
 \title{Weekly Challenge 13: Decidability}
 \author{CS 212 Nature of Computation\\Habib University}
 \date{Fall 2023}
@@ -38,6 +43,25 @@
 \[
   S = \{\langle M\rangle \mid M\text{ is a DFA},  u\in L(M) \implies f(u)\in L(M)\}.
 \]
+
+\begin{solution}
+  We prove by construction that $S$ is decidable and by using the result that $EQ_{DFA}$ is decidable. For ease of notation, we define an extension of $f$ to a language, $A$, as $f(A) = \{f(u) \mid u \in A\}$.
+  \begin{proof}
+    Assume $\langle M\rangle\in S$ and let $A = L(M)$.\\
+    Then $M$ recognizes $f(A)$.\\
+    That is, if a DFA, $N$, recognizes $f(A)$, then $M$ and $N$ are equivalent DFAs.\\
+    $N$ can be constructed by replacing $a$ with $f(a)$ in the transition table of $M$.\\
+    Let $E$ be the decider for $EQ_{DFA}$.\\
+    Then a decider, $F$, for $S$ can be constructed as follows:\\
+    On input $\langle M \rangle$,
+    \begin{itemize}
+    \item Construct $N$ from $M$.
+    \item Run $E$ on $\langle N, M\rangle$.
+    \item If $E$ accepts, \textit{accept}; if $E$ rejects, \textit{reject}.
+    \end{itemize}
+  \end{proof}
+\end{solution}
+
 \end{questions}
 \end{document}
 
