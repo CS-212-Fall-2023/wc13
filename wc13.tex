@@ -45,17 +45,18 @@
 \]
 
 \begin{solution}
-  We prove by construction that $S$ is decidable and by using the result that $EQ_{DFA}$ is decidable. For ease of notation, we define an extension of $f$ to a language, $A$, as $f(A) = \{f(u) \mid u \in A\}$.
+  We prove by construction that $S$ is decidable and by using the result that $EQ_{DFA}$ is decidable.
+
+  For every string, $u$, that a DFA in $S$ accepts, it also accepts $f(u)$, the bit-flip version of $u$. That is, if the DFA accepts a binary sequence with a $0$ in particular position, then it accepts another binary sequence with a $1$ in that position, and vice versa. Every transition in the DFA that is labeled with $0$ must also be labeled with $1$, and vice versa. That is, every transition is labeled with both $0$ and $1$.
+
+  We can check whether a DFA is of the above form by checking if it is equivalent to another DFA which has the same states and transitions but flipped transition labels.
+
   \begin{proof}
-    Assume $\langle M\rangle\in S$ and let $A = L(M)$.\\
-    Then $M$ recognizes $f(A)$.\\
-    That is, if a DFA, $N$, recognizes $f(A)$, then $M$ and $N$ are equivalent DFAs.\\
-    $N$ can be constructed by replacing $a$ with $f(a)$ in the transition table of $M$.\\
-    Let $E$ be the decider for $EQ_{DFA}$.\\
-    Then a decider, $F$, for $S$ can be constructed as follows:\\
+    Let $E$ be a decider for $EQ_{DFA}$.\\
     On input $\langle M \rangle$,
     \begin{itemize}
-    \item Construct $N$ from $M$.
+    \item Construct $N$ from $M$ by flipping the transition labels of $M$.
+
     \item Run $E$ on $\langle N, M\rangle$.
     \item If $E$ accepts, \textit{accept}; if $E$ rejects, \textit{reject}.
     \end{itemize}
